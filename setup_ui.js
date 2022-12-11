@@ -1,14 +1,14 @@
-function loadChangeHooks(cookie) {
+const loadChangeHooks = cookie => {
   // set up so that when a user clicks into or out of the filter field
   // the list appears and disappears
   let searchBox = document.getElementById("target-filter");
   let targetRow = document.getElementById("target-wrapper");
-  searchBox.addEventListener("focus", function () {
+  searchBox.addEventListener("focus", () => {
     // this just resets the list, since on focus the search is empty
     filterTargetList();
     targetRow.style.display = "block";
   });
-  searchBox.addEventListener("blur", function () {
+  searchBox.addEventListener("blur", () => {
     // clear the search
     searchBox.value = "";
     targetRow.style.display = "none";
@@ -20,7 +20,7 @@ function loadChangeHooks(cookie) {
     familiarElem.value = cookie.familiar.name;
   }
 
-  familiarElem.addEventListener("change", function () {
+  familiarElem.addEventListener("change", () => {
     familiar();
     calc();
     writeCookie();
@@ -29,7 +29,7 @@ function loadChangeHooks(cookie) {
   // hook into reset button
   // TODO is there a better way to achieve a reset without a reload?
   const resetElem = document.getElementById("reset-button");
-  resetElem.addEventListener("click", function () {
+  resetElem.addEventListener("click", () => {
     clearCookie();
     location.reload();
   });
@@ -38,7 +38,7 @@ function loadChangeHooks(cookie) {
 // Fetches the current value of the "target" label, and uses that to set
 // all the appropriate state fields. It also sets UI elements based on
 // the contents of the targetData dataset.
-function loadTarget() {
+const loadTarget = () => {
   let target = document.getElementById("target").innerText;
 
   // set state
@@ -78,27 +78,22 @@ function loadTarget() {
 
 // Change the "display" style on list elements according to the current value
 // of the "target-filter" input element.
-function filterTargetList() {
-  let targetList = document.getElementById("target-list");
-  let searchBox = document.getElementById("target-filter");
-  let targetLabel = document.getElementById("target");
+const filterTargetList = () => {
+  const targetList = document.getElementById("target-list");
+  const searchBox = document.getElementById("target-filter");
+  // let targetLabel = document.getElementById("target");
 
   // Get the search query
-  let query = searchBox.value;
-  let queryWords = query.split(" ");
-  queryWords = queryWords.map(function (word) {
-    return word.toLowerCase();
-  });
+  const query = searchBox.value;
+  const queryWords = query.split(" ").map(word => word.toLowerCase());
 
   // Filter the options based on the query
-  let results = Array.from(targetList.childNodes).filter(function (target) {
+  Array.from(targetList.childNodes).filter(target => {
     // Convert the option to lower case for case-insensitive matching
     const targetLower = target.innerText.toLowerCase();
 
     // Check if each query word is included in the option
-    let isMatch = queryWords.every(function (queryWord) {
-      return targetLower.indexOf(queryWord) >= 0;
-    });
+    const isMatch = queryWords.every(queryWord => targetLower.indexOf(queryWord) >= 0);
 
     target.style.display = isMatch ? "list-item" : "none";
   });
@@ -107,7 +102,7 @@ function filterTargetList() {
 // Populates the "target-list" element with "<li>"s according to the contents
 // of the targetData dataset. This is only run once per page load, and also
 // handles loading the target from a cookie if present;
-function loadTargets(cookie) {
+const loadTargets = cookie => {
   // grab references to the target related elements
   // table row element that holds the whole thing
   let targetList = document.getElementById("target-list");
@@ -129,7 +124,7 @@ function loadTargets(cookie) {
   for (let target of Object.keys(targetData)) {
     let opt = document.createElement("li");
     opt.innerText = target;
-    opt.addEventListener("mousedown", function () {
+    opt.addEventListener("mousedown", () => {
       targetLabel.innerText = target;
       searchBox.value = "";
       loadTarget();
@@ -142,11 +137,9 @@ function loadTargets(cookie) {
   }
 
   // detect enter and assume you're picking the top visible item
-  searchBox.addEventListener("keydown", function (e) {
+  searchBox.addEventListener("keydown", e => {
     if (e.key === 'Enter' || e.code === 'Enter') {
-      let topItem = targets.find(function (target) {
-        return target.style.display === "list-item"
-      });
+      let topItem = targets.find(target => target.style.display === "list-item");
       if (topItem) {
         searchBox.value = "";
         targetLabel.innerText = topItem.innerText;
@@ -159,14 +152,14 @@ function loadTargets(cookie) {
   });
 
   // Listen for changes to the search box
-  searchBox.addEventListener("input", function () {
+  searchBox.addEventListener("input", () => {
     filterTargetList();
   });
 }
 
 // Load familiars from the familiarData dataset. Also handles loading the
 // familiar from a cookie if present.
-function loadFamiliars(cookie) {
+const loadFamiliars = cookie => {
   const familiarElem = document.getElementById("familiar");
   // TODO use the first element of familiarData as the default instead
   let selected = "Ripper demon";
@@ -185,7 +178,7 @@ function loadFamiliars(cookie) {
 }
 
 // Set state fields according the value of the "familiar" element
-function familiar() {
+const familiar = () => {
   const familiarElem = document.getElementById("familiar");
   const familiar = familiarElem.value;
   // set state
@@ -195,7 +188,7 @@ function familiar() {
 // Generate a row object that matches the spec provided
 //
 // returns the generated table row element
-function generateInput(id, spec, previous) {
+const generateInput = (id, spec, previous) => {
   // generate html
   let row = document.createElement("tr");
   let iconCell = document.createElement("td");
@@ -226,7 +219,7 @@ function generateInput(id, spec, previous) {
 
     input.addEventListener(
       "click",
-      function () {
+      () => {
         state[id] = !state[id];
         input.style["background-color"] = state[id] ? "#47705b" : "#6c4b58";
         input.innerText = state[id] ? "Yes" : "No";
@@ -254,7 +247,7 @@ function generateInput(id, spec, previous) {
     }
     icon.src = spec.icons ? spec.icons[selected] : spec.icon;
     input.addEventListener("change",
-      function () {
+      () => {
         let selected;
         for (let key of Object.keys(spec.labels)) {
           if (spec.labels[key] === input.value) {
@@ -281,7 +274,7 @@ function generateInput(id, spec, previous) {
     }
     input.addEventListener(
       "change",
-      function () {
+      () => {
         state[id] = input.value;
         calc();
         writeCookie();
@@ -305,7 +298,7 @@ function generateInput(id, spec, previous) {
 // The objects are organized into these groups in the data, but there's
 // no strict requirement for that. It's purely a way to organize the data
 // visually.
-function loadSetupFields(cookie) {
+const loadSetupFields = cookie => {
   const buffTableElem = document.getElementById("player-buff-table");
   // playerBuffs loaded from ui_dataset.js
   for (let field of Object.keys(playerBuffs)) {
@@ -335,15 +328,15 @@ function loadSetupFields(cookie) {
   }
 }
 
-function writeCookie() {
+const writeCookie = () => {
   document.cookie = JSON.stringify(state);
 }
 
-function clearCookie() {
+const clearCookie = () => {
   document.cookie = "";
 }
 
-function readCookie() {
+const readCookie = () => {
   let cookie = {target: {}, familiar: {}};
   try {
     cookie = JSON.parse(document.cookie);
@@ -353,7 +346,7 @@ function readCookie() {
   return cookie;
 }
 
-function init() {
+const init = () => {
   let cookie = readCookie();
   loadChangeHooks(cookie);
   loadTargets(cookie);

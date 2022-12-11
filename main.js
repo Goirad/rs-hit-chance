@@ -1,17 +1,17 @@
 const state = {target: {}};
 
-function accF(x) {
+const accF = x => {
   return x * x * x / 1250 + x * 4 + 40;
 }
 
-function roundDown(p, x) {
+const roundDown = (p, x) => {
   if (p === null) {
     p = 2;
   }
   return Number((Math.floor(x * Math.pow(10, p)) / Math.pow(10, p)).toFixed(p))
 }
 
-function calc() {
+const calc = () => {
   // do some parsing/validation
   state.level = Number(state.level);
   state.weaponTier = Number(state.weaponTier);
@@ -235,7 +235,7 @@ function calc() {
     leechModifier = leechMap[state.curse];
   }
 
-  function getMaxArmourDrain(armourBonus) {
+  const getMaxArmourDrain = armourBonus => {
     return Math.ceil((0.15 * armourBonus) / Math.floor(Math.max(0.0075 * armourBonus, 1))) * Math.floor(0.0075 * armourBonus) / 5;
   }
 
@@ -279,7 +279,7 @@ function calc() {
 
   let defenceLevel = state.target.defence;
   // missing custom defence level modifier
-  let customDefenceModifier = 0;
+  // let customDefenceModifier = 0;
   if (state.additionalDefenceDrain < 1) {
     // it's a percentage
     defenceLevel = defenceLevel * (1 - Math.abs(state.additionalDefenceDrain));

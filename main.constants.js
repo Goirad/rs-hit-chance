@@ -51,7 +51,7 @@ const styleMap = {
   "fire": "magic"
 };
 
-function potionBoost(potion, level) {
+const potionBoost = (potion, level) => {
   const [mult, add, isOvl] = potionBoostsMap[potion];
   const boost = mult * level + add;
   return [boost, isOvl];
