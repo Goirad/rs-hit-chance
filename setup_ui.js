@@ -1,8 +1,8 @@
 const loadChangeHooks = cookie => {
   // set up so that when a user clicks into or out of the filter field
   // the list appears and disappears
-  let searchBox = document.getElementById("target-filter");
-  let targetRow = document.getElementById("target-wrapper");
+  const searchBox = document.getElementById("target-filter");
+  const targetRow = document.getElementById("target-wrapper");
   searchBox.addEventListener("focus", () => {
     // this just resets the list, since on focus the search is empty
     filterTargetList();
@@ -39,7 +39,7 @@ const loadChangeHooks = cookie => {
 // all the appropriate state fields. It also sets UI elements based on
 // the contents of the targetData dataset.
 const loadTarget = () => {
-  let target = document.getElementById("target").innerText;
+  const target = document.getElementById("target").innerText;
 
   // set state
   state.target = targetData[target];
@@ -105,11 +105,11 @@ const filterTargetList = () => {
 const loadTargets = cookie => {
   // grab references to the target related elements
   // table row element that holds the whole thing
-  let targetList = document.getElementById("target-list");
+  const targetList = document.getElementById("target-list");
   // input element that stores the filter
-  let searchBox = document.getElementById("target-filter");
+  const searchBox = document.getElementById("target-filter");
   // label element that displays the currently selected target
-  let targetLabel = document.getElementById("target");
+  const targetLabel = document.getElementById("target");
 
   // TODO use the first element of targetData as the default instead
   let selected = "Araxxi";
@@ -120,9 +120,9 @@ const loadTargets = cookie => {
   targetLabel.innerText = selected;
 
   // list of all the "<li>" elements
-  let targets = [];
+  const targets = [];
   for (let target of Object.keys(targetData)) {
-    let opt = document.createElement("li");
+    const opt = document.createElement("li");
     opt.innerText = target;
     opt.addEventListener("mousedown", () => {
       targetLabel.innerText = target;
@@ -139,7 +139,7 @@ const loadTargets = cookie => {
   // detect enter and assume you're picking the top visible item
   searchBox.addEventListener("keydown", e => {
     if (e.key === 'Enter' || e.code === 'Enter') {
-      let topItem = targets.find(target => target.style.display === "list-item");
+      const topItem = targets.find(target => target.style.display === "list-item");
       if (topItem) {
         searchBox.value = "";
         targetLabel.innerText = topItem.innerText;
@@ -167,7 +167,7 @@ const loadFamiliars = cookie => {
     selected = cookie.target.name;
   }
   for (let familiar of Object.keys(familiarData)) {
-    let opt = document.createElement("option");
+    const opt = document.createElement("option");
     opt.value = familiar;
     if (familiar === selected) {
       opt.selected = true;
@@ -190,15 +190,15 @@ const familiar = () => {
 // returns the generated table row element
 const generateInput = (id, spec, previous) => {
   // generate html
-  let row = document.createElement("tr");
-  let iconCell = document.createElement("td");
+  const row = document.createElement("tr");
+  const iconCell = document.createElement("td");
   iconCell.className = "icon-col";
-  let icon = document.createElement("img");
+  const icon = document.createElement("img");
   iconCell.appendChild(icon);
   row.appendChild(iconCell);
-  let textCell = document.createElement("td");
+  const textCell = document.createElement("td");
   row.appendChild(textCell);
-  let inputCell = document.createElement("td");
+  const inputCell = document.createElement("td");
   inputCell.className = "input-col";
 
   // null checks are handled by the calculator
@@ -237,7 +237,7 @@ const generateInput = (id, spec, previous) => {
       selected = Object.keys(spec.labels)[0];
     }
     for (let opt of Object.keys(spec.labels)) {
-      let option = document.createElement("option");
+      const option = document.createElement("option");
       option.innerText = spec.labels[opt];
       if (opt === selected) {
         input.value = spec.labels[opt];
@@ -302,28 +302,28 @@ const loadSetupFields = cookie => {
   const buffTableElem = document.getElementById("player-buff-table");
   // playerBuffs loaded from ui_dataset.js
   for (let field of Object.keys(playerBuffs)) {
-    let row = generateInput(field, playerBuffs[field], cookie[field]);
+    const row = generateInput(field, playerBuffs[field], cookie[field]);
     buffTableElem.appendChild(row);
   }
 
   const targetDebuffTableElem = document.getElementById("target-debuff-table");
   // targetDebuffs loaded from ui_dataset.js
   for (let field of Object.keys(targetDebuffs)) {
-    let row = generateInput(field, targetDebuffs[field], cookie[field]);
+    const row = generateInput(field, targetDebuffs[field], cookie[field]);
     targetDebuffTableElem.appendChild(row);
   }
 
   const playerDebuffTableElem = document.getElementById("player-debuff-table");
   // playerDebuffs loaded from ui_dataset.js
   for (let field of Object.keys(playerDebuffs)) {
-    let row = generateInput(field, playerDebuffs[field], cookie[field]);
+    const row = generateInput(field, playerDebuffs[field], cookie[field]);
     playerDebuffTableElem.appendChild(row);
   }
 
   const familiarTable = document.getElementById("familiar-table");
   // familiarBuffs loaded from ui_dataset.js
   for (let field of Object.keys(familiarBuffs)) {
-    let row = generateInput(field, familiarBuffs[field], cookie[field]);
+    const row = generateInput(field, familiarBuffs[field], cookie[field]);
     familiarTable.appendChild(row);
   }
 }
@@ -347,7 +347,7 @@ const readCookie = () => {
 }
 
 const init = () => {
-  let cookie = readCookie();
+  const cookie = readCookie();
   loadChangeHooks(cookie);
   loadTargets(cookie);
   loadFamiliars(cookie);

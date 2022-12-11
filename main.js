@@ -158,7 +158,7 @@ const calc = () => {
   // console.log("ful arrows bonus is " + fulArrows);
 
   // wen arrow stacks
-  let wenArrowStacks = state.wenArrows;
+  const wenArrowStacks = state.wenArrows;
   const wenArrows = state.ultimate ? (wenArrowStacks * 0.03) : (wenArrowStacks * 0.02);
 
   // keris
@@ -239,12 +239,12 @@ const calc = () => {
     return Math.ceil((0.15 * armourBonus) / Math.floor(Math.max(0.0075 * armourBonus, 1))) * Math.floor(0.0075 * armourBonus) / 5;
   }
 
-  let bsaDrain = Math.floor(
+  const bsaDrain = Math.floor(
     Math.min(state.blackStoneArrowStacks, getMaxArmourDrain(armourBonus)) *
     Math.floor(0.0075 * armourBonus) / 5
   );
 
-  let maxArmourDrain = Math.floor(getMaxArmourDrain(armourBonus));
+  const maxArmourDrain = Math.floor(getMaxArmourDrain(armourBonus));
 
   const defenceModifier = Math.min(leechModifier + bsaDrain, maxArmourDrain);
 
@@ -295,9 +295,9 @@ const calc = () => {
   defenceLevelBonus = Math.floor(defenceLevelBonus);
   // console.log("base defence level bonus " + defenceLevelBonus);
 
-  let defenceLevelBonusAfterDrain = defenceLevelBonus - 5 * defenceModifier - dominionGloves;
+  const defenceLevelBonusAfterDrain = defenceLevelBonus - 5 * defenceModifier - dominionGloves;
 
-  let finalArmour = Math.floor(armourBonus + defenceLevelBonusAfterDrain);
+  const finalArmour = Math.floor(armourBonus + defenceLevelBonusAfterDrain);
   // console.log("==== Final Armour " + finalArmour + " ====");
 
   // base affinity
@@ -309,10 +309,10 @@ const calc = () => {
   }
   // console.log("base affinity is " + baseAffinity);
   const affinityModifier = Math.min(0.10, quake + statius + bandos + guthixStaff + barrelchest + dragonHatchet + boneDagger + hexhunterAffinity);
-  let finalAffinity = baseAffinity + affinityModifier;
+  const finalAffinity = baseAffinity + affinityModifier;
   // console.log("==== Final Affinity " + finalAffinity.toFixed(2) + " ====");
 
-  let finalHitChance = roundDown(3,
+  const finalHitChance = roundDown(3,
     roundDown(3,
       roundDown(3,
         roundDown(3,
@@ -366,7 +366,7 @@ const calc = () => {
       (state.familiar.boss ? accF(meleeLevel) : (0.5 * accF(meleeLevel)))
     );
 
-    let meleeHitChance = roundDown(3,
+    const meleeHitChance = roundDown(3,
       roundDown(2, meleeAccuracy / finalArmour) *
       (state.target.affinity.melee / 100 + affinityModifier)
     );
@@ -389,7 +389,7 @@ const calc = () => {
       (state.familiar.boss ? accF(rangeLevel) : (0.5 * accF(rangeLevel)))
     );
 
-    let rangeHitChance = roundDown(3,
+    const rangeHitChance = roundDown(3,
       roundDown(2, rangeAccuracy / finalArmour) *
       (state.target.affinity.range / 100 + affinityModifier)
     );
@@ -408,7 +408,7 @@ const calc = () => {
       (state.familiar.boss ? accF(magicLevel) : (0.5 * accF(magicLevel)))
     );
 
-    let magicHitChance = roundDown(3,
+    const magicHitChance = roundDown(3,
       roundDown(2, magicAccuracy / finalArmour) *
       (state.target.affinity.magic / 100 + affinityModifier)
     );
