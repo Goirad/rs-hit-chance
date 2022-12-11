@@ -37,10 +37,9 @@ select {
   -moz-appearance: none;
   -ms-appearance: none;
   appearance: none;
-
   /*border: 1 px solid black;*/
   border: none;
-  outline: 0;
+  outline: none;
   /*border-radius: 4px;*/
   text-align: center;
   color: white;
@@ -202,7 +201,9 @@ button:hover, input:hover, select:hover {
   text-align: center;
   color: white;
   border: none;
+  outline: none;
   border-radius: 4px;
+  padding: 3px 0;
 }
 
 .input-col > select {
@@ -210,6 +211,11 @@ button:hover, input:hover, select:hover {
   background-color: inherit;
   width: 100%;
   border-radius: 4px;
+  padding: 3px 0;
+}
+
+.input-col > button {
+  padding: 3px 0;
 }
 
 .reset-button {
